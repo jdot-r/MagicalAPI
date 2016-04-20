@@ -16,45 +16,46 @@ use pocketmine\event\Listener;
 class Main extends PluginBase implements Listener{
   
   public function onEnable() {
-    $this->registerPluginEvents($this, $this);
-    $this->printOut(C::GREEN."[MagicalAPI] Simple API Enabled!");
-    
-    $this->makeConfigDir();
-    $this->config = new Config($this->getDataFolder(). "config.yml", Config::YAML);
+      $this->registerPluginEvents($this, $this);
+      $this->printOut(C::GREEN . "[MagicalAPI] Simple API Enabled!");
+      $this->makeConfigDir();
+      $this->config = new Config($this->getDataFolder(). "config.yml", Config::YAML);
   }
   
   public function onDisable() {
-    $this->saveResource("config.yml");
-    $this->printOut(C::RED."[MagicalAPI] Simple API Disabled!");
+      $this->saveResource("config.yml");
+      $this->printOut(C::RED . "[MagicalAPI] Simple API Disabled!");
   }
   
-  // API Functions
+  /*
+   * API Functions
+   */
   
   function registerPluginEvents(Listener $listener, Plugin $plugin) {
-    $ev = $this->getServer()->getPluginManager()->registerEvents($listener, $plugin);
-    return $ev;
+      $ev = $this->getServer()->getPluginManager()->registerEvents($listener, $plugin);
+      return $ev;
   }
   
   function printOut($msg){
-    return $this->getLogger()->info($msg);
+      return $this->getLogger()->info($msg);
   }
   
   function getAllPlayers() {
-    $allplayers = $this->getServer()->getOnlinePlayers();
-    return $allplayers;
+      $allplayers = $this->getServer()->getOnlinePlayers();
+      return $allplayers;
   }
   
   function getPlayersInLevel($levelName) {
-    $level = $this->getServer()->getLevelByName($levelName);
-    if($level instanceof Level){
-      return $level->getPlayers();
-    }
-    return null;
+      $level = $this->getServer()->getLevelByName($levelName);
+      if($level instanceof Level){
+          return $level->getPlayers();
+      }
+      return null;
   }
   
   function makeConfigDir() {
-    $mkdir = @mkdir($this->getDataFolder());
-    return $mkdir;
+      $mkdir = @mkdir($this->getDataFolder());
+      return $mkdir;
   }
   
 }
