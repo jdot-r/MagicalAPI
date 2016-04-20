@@ -34,9 +34,8 @@ class Main extends PluginBase {
     return $ev;
   }
   
-  function printOut() :string {
-    $msg = $this->getLogger()->info();
-    return $msg;
+  function printOut($msg){
+    return $this->getLogger()->info($msg);
   }
   
   function getAllPlayers() {
