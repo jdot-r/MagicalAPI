@@ -36,7 +36,7 @@ class Main extends PluginBase implements Listener{
       return $ev;
   }
   
-  function printOut(){
+  function printOut($msg){
       $msg = $this->getLogger()->info($msg);
       return $msg;
   }
@@ -46,7 +46,7 @@ class Main extends PluginBase implements Listener{
       return $allplayers;
   }
   
-  function getPlayersInLevel($levelName) {
+  function getPlayersInLevel() {
       $players = $this->getLevel()->getPlayers();
       return $players;
   }
@@ -56,4 +56,12 @@ class Main extends PluginBase implements Listener{
       return $mkdir;
   }
   
+  function getXYZ(){
+    $xyz = array (
+      $this->getX(),
+      $this->getY(),
+      $this->getZ(),
+    );
+    return $xyz
+  }
 }
