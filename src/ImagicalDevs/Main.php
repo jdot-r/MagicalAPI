@@ -46,11 +46,8 @@ class Main extends PluginBase implements Listener{
   }
   
   function getPlayersInLevel($levelName) {
-      $level = $this->getServer()->getLevelByName($levelName);
-      if($level instanceof Level){
-          return $level->getPlayers();
-      }
-      return null;
+      $players = $this->getLevel()->getPlayers();
+      return $players;
   }
   
   function makeConfigDir() {
