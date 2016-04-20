@@ -56,13 +56,4 @@ class Main extends PluginBase {
     return $mkdir;
   }
   
-  function getXYZ() {
-    $xyz = array (
-      $this->getX();
-      $this->getY();
-      $this->getZ();
-    );
-    return $xyz;
-  }
-  
 }
