@@ -3,6 +3,7 @@
 namespace ImagicalDevs;
 
 use pocketmine\plugin\PluginBase;
+use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat as C;
 use pocketmine\level\Level;
 use pocketmine\utils\Config;
@@ -12,10 +13,10 @@ use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\event\Listener;
 
-class Main extends PluginBase {
+class Main extends PluginBase implements Listener{
   
   public function onEnable() {
-    $this->registerPluginEvents();
+    $this->registerPluginEvents($this, $this);
     $this->printOut(C::GREEN."[MagicalAPI] Simple API Enabled!");
     
     $this->makeConfigDir();
@@ -29,8 +30,8 @@ class Main extends PluginBase {
   
   // API Functions
   
-  function registerPluginEvents() {
-    $ev = $this->getServer()->getPluginManager()->registerEvents($this,$this);
+  function registerPluginEvents(Listener $listener, Plugin $plugin) {
+    $ev = $this->getServer()->getPluginManager()->registerEvents($listener, $plugin);
     return $ev;
   }
   
