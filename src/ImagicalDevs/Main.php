@@ -36,8 +36,9 @@ class Main extends PluginBase implements Listener{
       return $ev;
   }
   
-  function printOut($msg){
-      return $this->getLogger()->info($msg);
+  function printOut(){
+      $msg = $this->getLogger()->info($msg);
+      return $msg;
   }
   
   function getAllPlayers() {
