@@ -13,50 +13,60 @@ use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\event\Listener;
 
-class Main extends PluginBase implements Listener{
+class Main extends PluginBase implements Listener {
   
   public function onEnable() {
       $this->registerPluginEvents($this, $this);
       $this->printOut(C::GREEN . "[MagicalAPI] Simple API Enabled!");
-      $this->makeConfigDir();
+      $this->saveCfg("config.yml");
+      $this->mkCfgDir();
       $this->config = new Config($this->getDataFolder(). "config.yml", Config::YAML);
   }
   
   public function onDisable() {
-      $this->saveResource("config.yml");
+      $this->saveCfg("config.yml");
       $this->printOut(C::RED . "[MagicalAPI] Simple API Disabled!");
   }
   
   /*
    * API Functions
    */
+   
+  function name() {
+    return $this->getName();
+  }
+  
+  function randInt() {
+    $rand = rand(1,1000);
+    return $rand;
+  }
+  
+  function serverName() {
+    $name = $this->getServer()->getName();
+    return $name;
+  }
   
   function registerPluginEvents(Listener $listener, Plugin $plugin) {
       $ev = $this->getServer()->getPluginManager()->registerEvents($listener, $plugin);
       return $ev;
   }
   
-  function printOut($msg){
-      $msg = $this->getLogger()->info($msg);
+  function printOut($message) :string {
+      $msg = $this->getLogger()->info($message);
       return $msg;
   }
   
-  function getAllPlayers() {
-      $allplayers = $this->getServer()->getOnlinePlayers();
-      return $allplayers;
-  }
-  
-  function getPlayersInLevel() {
+  function getPlayersInLvl($level) {
       $players = $this->getLevel()->getPlayers();
       return $players;
   }
   
-  function makeConfigDir() {
+  function mkCfgDir() {
       $mkdir = @mkdir($this->getDataFolder());
       return $mkdir;
   }
   
-  function getXYZ(){
+  function getXYZ() {
     $xyz = array (
       $this->getX(),
       $this->getY(),
@@ -64,4 +74,40 @@ class Main extends PluginBase implements Listener{
     );
     return $xyz
   }
+  
+  function increase() {
+    return $this++;
+  }
+  
+  function decrease() {
+    return $this--;
+  }
+  
+  function saveCfg($cfg) :string {
+    $config = $this->saveResource($cfg);
+    return $config;
+  }
+  
+  function sendMsgInLvl($msg, $level) :string {
+    if($level instanceof Level){
+      $lvl = $this->getServer()->getLevelByName($level);
+      $players = $lvl->getPlayers();
+      foreach($players as $p){
+        $message = $p->sendMessage($msg);
+        return $message;
+      }
+    }
+  }
+  
+  function sendWarning($player, $msg) :string {
+    if($player instanceof Player){
+      return $player->sendMessage($msg);
+    }
+  }
+  
+  function players() {
+    $players = $this->getServer()->getOnlinePlayers();
+    return $players;
+  }
+  
 }
